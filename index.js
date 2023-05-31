@@ -41,7 +41,7 @@ app.post("/v1/completions", (request, response) => {
 	} catch (e) {
 		if (e.constructor === ValidationError) {
 			console.error(e.message);
-			response.status(400).send({ message: e.message });
+			response.status(401).send({ message: e.message });
 			return;
 		}
 		throw e;
