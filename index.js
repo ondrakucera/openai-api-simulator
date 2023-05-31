@@ -66,6 +66,31 @@ app.post("/v1/completions", (request, response) => {
 	response.send(new CompletionsResponse(completionsRequest.model, randomParagraph()));
 });
 
+app.get("/", (request, response) => {
+	response.set({ "Content-Type": "text/html" });
+	response.send(`<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>OpenAI simulator</title>
+	</head>
+	<body>
+		<h1>OpenAI simulator</h1>
+		<p>
+			This is a very primitive simulator of https://api.openai.com/v1/completions. It exists to support <a
+				href="https://reactgirls.com/">ReactGirls</a> lectures.
+		</p>
+		<p>
+			Nothing else is to be seen here. Instead of GET request (such as this one), you are expected to send a POST
+			request to http://localhost:${port}/v1/completions.
+		</p>
+	</body>
+	</html>
+	`);
+});
+
 // middleware with an arity of 4 are considered
 // error handling middleware. When you next(err)
 // it will be passed through the defined middleware
