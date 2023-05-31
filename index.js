@@ -36,7 +36,16 @@ function CompletionsResponse(model, choiceText) {
 app.post("/v1/completions", (request, response) => {
 	console.info(`Received a request at ${new Date().toISOString()}`);
 
-	validateAuthorization(request.header("authorization"));
+	try {
+		validateAuthorization(request.header("authorization"));
+	} catch (e) {
+		if (e.constructor === ValidationError) {
+			console.error(e.message);
+			response.status(400).send({ message: e.message });
+			return;
+		}
+		throw e;
+	}
 
 	/** @type {CompletionsRequest} */
 	const completionsRequest = request.body;
